@@ -1,11 +1,9 @@
 <?php
 
 include '../functions/func-frontend.php';
-$raceID = $_GET['id'];
+$raceID = $_GET['heat'];
 
-$race = getRaceData($raceID);
-$qualify = getQualifyData($raceID);
-
+$race = getRaceDataByHeat($raceID);
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -71,14 +69,11 @@ error_reporting(E_ALL);
       <div class="container">
         <h3><?php echo getRaceTitle($race); ?></h3>
         <h6><?php echo getRaceTime($race); ?></h6>
+        <h6><b>Win by: </b><?php echo getRaceWinMethod($race); ?></h6>
         <hr>
 
         <h4>Race Results</h4>
-        <?php getRaceResults($race, $qualify); ?>
-
-
-        <h4>Qualifying Results</h4>
-        <?php getQualifyResults($qualify); ?>
+        <?php getHeatResults($race); ?>
 
         <hr>
       </div>

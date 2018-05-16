@@ -20,6 +20,15 @@ function getRaceData($raceID) {
 
 }
 
+function getRaceDataByHeat($raceID) {
+  $heatURL = 'https://kartlaps.info/v2/tkquebec/heat/' . $raceID . '.json';
+  $heatData = file_get_contents($heatURL);
+  $result = json_decode($heatData, true);
+
+  return $result;
+
+}
+
 function getArticleByID ($articleID) {
   $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
   $sql = "SELECT * FROM `news` WHERE id='$articleID'";
@@ -319,6 +328,9 @@ function getRaceTitle($raceData) {
 function getRacetime($raceData) {
   return $raceData['heat']['localDateTime'];
 }
+function getRaceWinMethod($raceData) {
+  return $raceData['heat']['winBy'];
+}
 
 function getGapToLeader($raceData, $lapCount) {
   $leaderLaps = 0;
@@ -394,6 +406,49 @@ function getRaceResults($race, $qualify) {
 
 }
 
+function getHeatResults($race) {
+  $laps = $race['heat']['laps'];
+  echo '<table class="table table-striped">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Position</th>
+        <th scope="col">Driver</th>
+        <th scope="col">Gap</th>
+        <th scope="col">Laps Run</th>
+        <th scope="col">Fastest Lap</th>
+      </tr>
+    </thead><tbody>';
+
+    $count = 0;
+    $pointTotal = 10;
+
+    foreach($race['heat']['participants'] as $driver) {
+      $count++;
+
+      $lapCount = getLapCount($race, $driver['id']);
+      echo '<tr>';
+      echo '<th scope="row">'.$count.'</th>';
+      echo '<td><a href="../driver/?id='.$driver['id'].'">' . $driver['racerName'] . '</a></td>';
+      echo '<td>'.getGapToLeader($race, $lapCount).'L</td>';
+      echo '<td>'.$lapCount.'</td>';
+      echo '<td>';
+      if(isFasted($race, getFastestLap($race, $driver['id']))) {
+        echo '<b>';
+      }
+      echo getFastestLap($race, $driver['id']);
+      if(isFasted($race, getFastestLap($race, $driver['id']))) {
+        echo '</b>';
+      }
+      echo '</td>';
+      echo '</tr>';
+      if($pointTotal > 0) {
+        $pointTotal--;
+      }
+    }
+
+    echo '</tbody></table>';
+}
+
 function getQualifyResults($race) {
   $laps = $race['heat']['laps'];
   echo '<table class="table table-striped">
@@ -439,6 +494,16 @@ function ordinal_suffix($num){
     return 'th';
 }
 
+function proSkillGain($impact) {
+  if ($impact > 0) {
+    return "success";
+  } if ($impact == 0) {
+    return "warning";
+  } else {
+    return "danger";
+  }
+}
+
 function getDriverHistory($driverData) {
   echo '<table class="table table-striped">
     <thead class="thead-light">
@@ -458,9 +523,9 @@ function getDriverHistory($driverData) {
       echo '<td>'.$heatData['heat']['name'].' - Kart '.$heatData['kartNumber'].'</td>';
       echo '<td>'.$heatData['heat']['localDateTime'].'</td>';
       echo '<td>'.$heatData['finalPosition'].''.ordinal_suffix($heatData['finalPosition']).'</td>';
-      echo '<td>'.$heatData['pointsAtStart'].' ('.$heatData['pointsImpact'].')</td>';
+      echo '<td>'.$heatData['pointsAtStart'].' <div class="badge badge-'.proSkillGain($heatData['pointsImpact']).'">'.$heatData['pointsImpact'].'</div></td>';
       echo '<td>'.$heatData['bestLapTime'].'</td>';
-      echo '<td><a href="../results/?id=' . $heatData['heat']['id'] . '" class="btn btn-outline-success btn-sm">Results</a></td>';
+      echo '<td><a href="../results/view.php?heat=' . $heatData['heat']['id'] . '" class="btn btn-outline-success btn-sm">Results</a></td>';
       echo '</tr>';
     }
     echo '</tbody></table>';
