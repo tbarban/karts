@@ -1,0 +1,12 @@
+body {
+  padding-top: 4.5rem;
+}
+
+.jumbotron h1 > span {
+  font-size: 30px;
+  text-transform: uppercase;
+}
+
+.news-home h6 {
+  color: #333;
+}
