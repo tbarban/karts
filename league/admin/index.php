@@ -1,14 +1,19 @@
 <?php
-include '../functions.php';
+require_once '../functions/func-admin.php';
+// Initialize the session
+session_start();
+
+// If session variable is not set it will redirect to login page
+if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
+  header("location: login.php");
+  exit;
+}
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-$driverID = $_GET['id'];
-
-$racer = getDriverData($driverID);
-
 ?>
+
 <!DOCTYPE HTML>
 <html lang="en">
   <head>
@@ -20,7 +25,7 @@ $racer = getDriverData($driverID);
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link href="../assets/css/bootstrap.css" rel="stylesheet">
     <link href="../assets/css/karting.css" rel="stylesheet">
-    <title>Driver History \ Top Karting</title>
+    <title>Dashboard \ Top Karting Racing League</title>
   </head>
 
   <body>
@@ -33,45 +38,61 @@ $racer = getDriverData($driverID);
 
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item" style="padding-right: 10px;">
-            <a class="nav-link" href="../search/">Search</a>
+          <li class="nav-item active" style="padding-right: 10px;">
+            <a class="nav-link" href="">Dashboard</a>
           </li>
           <li class="nav-item" style="padding-right: 10px;">
-            <a class="nav-link" href="../leaderboard/">Leaderboard</a>
+            <a class="nav-link" href="schedule/">Schedule</a>
           </li>
           <li class="nav-item" style="padding-right: 10px;">
-            <a class="nav-link" href="../top-times/">Top Times</a>
+            <a class="nav-link" href="results/">Results</a>
+          </li>
+          <li class="nav-item" style="padding-right: 10px;">
+            <a class="nav-link" href="drivers/">Drivers</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              My Account
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="logout.php">Logout</a>
+            </div>
           </li>
         </ul>
       </div>
     </nav>
 
-    <main role="main">
-      <div class="jumbotron">
-        <div class="container">
-          <h1 class="display-4">Driver History</h1>
-        </div>
-      </div>
-
+    <main role="main" style="padding-top: 40px;">
       <div class="container">
-          <div class="row" style="text-align: center;">
-            <div class="col-md-4">
-              <h6>ProSkill Score:</h6>
-              <h2><?php echo $racer['racer']['points']; ?></h2>
-            </div>
-            <div class="col-md-4">
-              <h6>Driver Name:</h6>
-              <h2><?php echo $racer['racer']['racerName']; ?></h2>
-            </div>
-            <div class="col-md-4">
-              <h6>Races Completed:</h6>
-              <h2><?php echo sizeOf($racer['racer']['heats']); ?></h2>
-            </div>
+
+        <div class="row" style="text-align: center;">
+          <div class="col-md-4">
+            <a class="card" href="schedule/">
+              <div class="card-body">
+                <h1><i class="fas fa-calendar-alt"></i></h1>
+                <h3>Schedule</h3>
+              </div>
+            </a>
           </div>
+          <div class="col-md-4">
+            <a class="card" href="results/">
+              <div class="card-body">
+                <h1><i class="fas fa-calendar-check"></i></h1>
+                <h3>Results</h3>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-4">
+            <a class="card" href="drivers/">
+              <div class="card-body">
+                <h1><i class="fas fa-users"></i></h1>
+                <h3>Drivers</h3>
+              </div>
+            </a>
+          </div>
+        </div>
 
-          <hr>
 
-          <?php getDriverHistory($racer); ?>
 
         <hr>
       </div> <!-- /container -->

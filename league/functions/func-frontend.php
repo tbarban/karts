@@ -1,8 +1,5 @@
 <?php
-define('DB_SERVER', 'localhost');
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', 'root');
-define('DB_NAME', 'karting');
+include 'config.php';
 
 
 function getRaceData($raceID) {
@@ -130,6 +127,7 @@ function getBriefSchedule() {
   $sql = "SELECT * FROM `races` WHERE `date` >= CURDATE() ORDER BY date ASC LIMIT 3";
   $result = mysqli_query($link, $sql);
   $row = mysqli_fetch_assoc($result);
+  $count = 0;
 
   echo '<table class="table table-striped">
     <thead>
@@ -142,8 +140,9 @@ function getBriefSchedule() {
     <tbody>';
 
     foreach ($result as $race) {
+      $count++;
       echo '<tr>';
-      echo '<th scope="row">' . $race['id']. '</th>';
+      echo '<th scope="row">' . $count . '</th>';
       echo '<td>' . date("M jS, Y", strtotime($race['date'])) . '</td>';
       echo '<td>6:30 PM</td>';
       echo '</tr>';
@@ -159,6 +158,7 @@ function getFullSchedule() {
   $sql = "SELECT * FROM `races` ORDER BY date ASC";
   $result = mysqli_query($link, $sql);
   $row = mysqli_fetch_assoc($result);
+  $count = 0;
 
   echo '<table class="table table-hover">
     <thead class="thead-light">
@@ -174,8 +174,9 @@ function getFullSchedule() {
     <tbody>';
 
     foreach ($result as $race) {
+      $count++;
       echo '<tr>';
-      echo '<th scope="row">' . $race['id']. '</th>';
+      echo '<th scope="row">' . $count . '</th>';
       echo '<td>' . date("M jS, Y", strtotime($race['date'])) . '</td>';
       echo '<td>6:30 PM</td>';
       if($race['race_completed']) {
@@ -197,7 +198,7 @@ function getFullSchedule() {
 
 function getBriefStandings() {
   $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-  $sql = "SELECT * FROM `drivers` ORDER BY points_scored ASC LIMIT 5";
+  $sql = "SELECT * FROM `drivers` ORDER BY points_scored DESC LIMIT 5";
   $result = mysqli_query($link, $sql);
   $row = mysqli_fetch_assoc($result);
 
@@ -228,7 +229,7 @@ function getBriefStandings() {
 
 function getFullStandings() {
   $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-  $sql = "SELECT * FROM `drivers` ORDER BY points_scored ASC";
+  $sql = "SELECT * FROM `drivers` ORDER BY points_scored DESC";
   $result = mysqli_query($link, $sql);
   $row = mysqli_fetch_assoc($result);
 
