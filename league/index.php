@@ -8,15 +8,24 @@
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+<<<<<<< HEAD
     <link href="assets/css/bootstrap.css" rel="stylesheet">
     <link href="assets/css/karting.css" rel="stylesheet">
+=======
+    <link href="../assets/css/bootstrap.css" rel="stylesheet">
+    <link href="../assets/css/karting.css" rel="stylesheet">
+>>>>>>> 72e25647a35dbd563d1557b12ac2a96c593ad9ad
     <title>Home \ Top Karting Racing League</title>
   </head>
 
   <body>
 
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+<<<<<<< HEAD
       <a class="navbar-brand" href="#"><img src="assets/img/tklogo.png" height="50"/></a>
+=======
+      <a class="navbar-brand" href="#"><img src="../assets/img/tklogo.png" height="50"/></a>
+>>>>>>> 72e25647a35dbd563d1557b12ac2a96c593ad9ad
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -89,6 +98,10 @@
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<<<<<<< HEAD
     <script src="assets/js/bootstrap.min.js"></script>
+=======
+    <script src="../assets/js/bootstrap.min.js"></script>
+>>>>>>> 72e25647a35dbd563d1557b12ac2a96c593ad9ad
   </body>
 </html>

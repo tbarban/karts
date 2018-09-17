@@ -65,7 +65,14 @@ $racer = getDriverData($driverID);
             </div>
             <div class="col-md-4">
               <h6>Races Completed:</h6>
-              <h2><?php echo sizeOf($racer['racer']['heats']); ?></h2>
+              <h2><?php
+              if(isset($racer['racer']['heats'])) {
+                echo sizeOf($racer['racer']['heats']);
+              } else {
+                echo '0';
+              }
+
+              ?></h2>
             </div>
           </div>
 
