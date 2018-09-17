@@ -1,11 +1,9 @@
 <?php
 
-include '../functions/func-frontend.php';
+include '../functions.php';
 $raceID = $_GET['id'];
 
 $race = getRaceData($raceID);
-$qualify = getQualifyData($raceID);
-
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -23,13 +21,13 @@ error_reporting(E_ALL);
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link href="../assets/css/bootstrap.css" rel="stylesheet">
     <link href="../assets/css/karting.css" rel="stylesheet">
-    <title>Results \ Top Karting Racing League</title>
+    <title>Results \ Top Karting</title>
   </head>
 
   <body>
 
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="#"><img src="../assets/img/tklogo.png" height="50"/></a>
+      <a class="navbar-brand" href="../"><img src="../assets/img/tklogo.png" height="50"/></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -37,27 +35,15 @@ error_reporting(E_ALL);
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item" style="padding-right: 10px;">
-            <a class="nav-link" href="../">Home</a>
+            <a class="nav-link" href="../search/">Search</a>
           </li>
           <li class="nav-item" style="padding-right: 10px;">
-            <a class="nav-link" href="">About</a>
+            <a class="nav-link" href="../leaderboard/">Leaderboard</a>
           </li>
           <li class="nav-item" style="padding-right: 10px;">
-            <a class="nav-link" href="../schedule/">Schedule</a>
-          </li>
-          <!--<li class="nav-item" style="padding-right: 10px;">
-            <a class="nav-link" href="../results/">Results</a>
-          </li>-->
-          <li class="nav-item" style="padding-right: 10px;">
-            <a class="nav-link" href="../standings/">Standings</a>
-          </li>
-          <li class="nav-item" style="padding-right: 10px;">
-            <a class="nav-link" href="../news/">News</a>
+            <a class="nav-link" href="../top-times/">Top Times</a>
           </li>
         </ul>
-        <span class="navbar-text">
-          <b>Next Race:</b> Tuesday, June 5th
-        </span>
       </div>
     </nav>
 
@@ -71,15 +57,14 @@ error_reporting(E_ALL);
       <div class="container">
         <h3><?php echo getRaceTitle($race); ?></h3>
         <h6><?php echo getRaceTime($race); ?></h6>
+        <h6><b>Win by: </b><?php echo getRaceWinMethod($race); ?></h6>
         <hr>
 
         <h4>Race Results</h4>
-        <?php getRaceResults($race, $qualify); ?>
-
-
-        <h4>Qualifying Results</h4>
-        <?php getQualifyResults($qualify); ?>
-
+        <?php getHeatResults($race); ?>
+        <hr>
+        <h4>Driver Laps</h4>
+        <?php getLaps($race); ?>
         <hr>
       </div>
     </main>
