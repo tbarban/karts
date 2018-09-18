@@ -305,30 +305,36 @@ function proSkillGain($impact) {
 }
 
 function getDriverHistory($driverData) {
-  echo '<table class="table table-striped">
-    <thead class="thead-light">
-      <tr>
-        <th scope="col">Heat</th>
-        <th scope="col">Date</th>
-        <th scope="col">Finish Position</th>
-        <th scope="col">ProSkill</th>
-        <th scope="col">Fastest Lap</th>
-        <th scope="col">Details</th>
-      </tr>
-    </thead>
-    <tbody>';
 
-    foreach ($driverData['racer']['heats'] as $heatData) {
-      echo '<tr>';
-      echo '<td>'.$heatData['heat']['name'].' - Kart '.$heatData['kartNumber'].'</td>';
-      echo '<td>'.$heatData['heat']['localDateTime'].'</td>';
-      echo '<td>'.$heatData['finalPosition'].''.ordinal_suffix($heatData['finalPosition']).'</td>';
-      echo '<td>'.$heatData['pointsAtStart'].' <div class="badge badge-'.proSkillGain($heatData['pointsImpact']).'">'.$heatData['pointsImpact'].'</div></td>';
-      echo '<td>'.$heatData['bestLapTime'].'</td>';
-      echo '<td><a href="../results/?id=' . $heatData['heat']['id'] . '" class="btn btn-outline-success btn-sm">Results</a></td>';
-      echo '</tr>';
+  if(isset($driverData['racer']['heats'])) {
+    echo '<table class="table table-striped">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Heat</th>
+          <th scope="col">Date</th>
+          <th scope="col">Finish Position</th>
+          <th scope="col">ProSkill</th>
+          <th scope="col">Fastest Lap</th>
+          <th scope="col">Details</th>
+        </tr>
+      </thead>
+      <tbody>';
+
+      foreach ($driverData['racer']['heats'] as $heatData) {
+        echo '<tr>';
+        echo '<td>'.$heatData['heat']['name'].' - Kart '.$heatData['kartNumber'].'</td>';
+        echo '<td>'.$heatData['heat']['localDateTime'].'</td>';
+        echo '<td>'.$heatData['finalPosition'].''.ordinal_suffix($heatData['finalPosition']).'</td>';
+        echo '<td>'.$heatData['pointsAtStart'].' <div class="badge badge-'.proSkillGain($heatData['pointsImpact']).'">'.$heatData['pointsImpact'].'</div></td>';
+        echo '<td>'.$heatData['bestLapTime'].'</td>';
+        echo '<td><a href="../results/?id=' . $heatData['heat']['id'] . '" class="btn btn-outline-success btn-sm">Results</a></td>';
+        echo '</tr>';
+      }
+      echo '</tbody></table>';
+
+    } else {
+      echo '<p>No race data available.</p>';
     }
-    echo '</tbody></table>';
 }
 
  ?>
