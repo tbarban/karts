@@ -48,10 +48,6 @@ include '../functions.php';
       </div>
 
       <div class="container">
-
-        <h5>Track Record:</h5>
-        <p><b>24.575</b> seconds - Mini-Staff<br>2018-04-17 9:35 PM</p>
-
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Daily</a>
